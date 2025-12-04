@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=`, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!--  
+    <- 1.1 ->
+    <div class="tabs">
+        <button class="tab-btn active" data-tab="about">About</button>     
+        <button class="tab-btn" data-tab="services">Services</button> 
+        <button class="tab-btn" data-tab="contacts">Contacts</button> 
+    </div>
+    
+    <div class="tab-content" data-content="about">Company info...</div> 
+    <div class="tab-content" data-content="services" style="display:none;">Our services...</div> 
+    <div class="tab-content" data-content="contacts" style="display:none;">Contact us...</div>
+    
+    <style> .active { background: #111; color: white; } </style>
+
+    <- 1.2 ->
+    <label>
+        <input type="checkbox" id="all">
+        Select all
+    </label>
+
+    <div>
+      <input type="checkbox" class="checkbox" data-id="1"> Item 1<br>
+      <input type="checkbox" class="checkbox" data-id="2"> Item 2<br>
+      <input type="checkbox" class="checkbox" data-id="3"> Item 3<br>
+    </div>
+
+    <- 2 ->
+    <input type="text" id="comment-input" placeholder="Your comment"> 
+    <button id="add-comment">Add</button>
+    <ol id="comments"></ol>
+
+    <- 3 ->
+    <ul id="products">
+         <li class="product"> Product A 
+            <button class="delete-btn">Delete</button> 
+        </li> 
+        
+        <li class="product"> Product B 
+            <button class="delete-btn">Delete</button> 
+        </li> 
+        
+        <li class="product"> Product C 
+            <button class="delete-btn">Delete</button> 
+        </li> 
+    </ul>
+    -->
+
+    <-1->
+    <input type="textarea" id="input" >
+    <p id="text"></p>
+
+
+    <- 2 ->
+     <!-- action="http://localhost:3000/api" method="post" --> 
+    <form  id="login-form">
+        <input type="text" name="login" placeholder="Enter your login..." required>
+        <input type="password" name="password" placeholder="Enter your password..." required>
+        <button type="submit">Submit</button> 
+    </form>
+
+   
+    <script src="doom.js"></script>
+</body>
+</html>
+
