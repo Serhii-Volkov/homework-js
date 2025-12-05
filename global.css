@@ -1,0 +1,22 @@
+.dark-mode{
+    background-color: black;
+    color: white;
+}
+
+.box{
+    position:relative;
+    width:200px;
+    border: 1px solid red;
+}
+
+.city-list{
+    position:absolute;
+    top:35px;left:0;
+    width:100%;
+    border:1px solid #ccc; 
+    display:none;
+    list-style:none;
+    padding:0;
+    margin:0;
+    background:white;
+}

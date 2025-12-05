@@ -221,7 +221,7 @@
 //})
 
 
-//new 
+
 
 //Задача 1. Живое превью + лог change
 //ТЗ:
@@ -230,13 +230,13 @@
 //3. При событии change (когда поле теряет фокус после изменения) в консоль выводить:
 //• "Value finalized: <значение>".
 
-const input = document.getElementById('input')
-const text = document.getElementById('text')
-
-input.addEventListener('change', (event) => {
-    text.textContent = event.target.value
-    console.log(`Value finalized: ${event.target.value}`)
-})
+//const input = document.getElementById('input')
+//const text = document.getElementById('text')
+//
+//input.addEventListener('change', (event) => {
+//    text.textContent = event.target.value
+//    console.log(`Value finalized: ${event.target.value}`)
+//})
 
 //Задача 2. Форма логина с валидацией и двумя событиями
 //ТЗ:
@@ -249,29 +249,101 @@ input.addEventListener('change', (event) => {
 //3. Дополнительно:
 //• при input в поле password, если длина меньше 6 → красная рамка, иначе обычная.
 
-const form = document.getElementById('login-form')
+//const form = document.getElementById('login-form')
+//
+//form.addEventListener('submit', (e) => {
+//    e.preventDefault()
+//
+//    const login = form.elements.login.value
+//    const password = form.elements.password.value
+//    const passwordElement = form.elements.password
+//     
+//
+//    if(!login || !password){
+//        console.log("Fill all fields")
+//        return
+//    }
+//    
+//    if(password.length < 6){
+//        console.log("Password too short")
+//        passwordElement.style.borderColor = "red"
+//        return
+//    }
+//    
+//    console.log(`Logged in: ${login}`)
+//    form.reset()
+//    form.elements.password.style.borderColor = ""
+//
+//})
 
-form.addEventListener('submit', (e) => {
-    e.preventDefault()
 
-    const login = form.elements.login.value
-    const password = form.elements.password.value
-    const passwordElement = form.elements.password
-     
 
-    if(!login || !password){
-        console.log("Fill all fields")
-        return
+//New
+
+//Задача 1 — Переключатель темы (click)
+//
+//ТЗ
+//1. Есть кнопка «Сменить тему».
+//2. При клике фон страницы становится чёрным, текст — белым.
+//3. При повторном клике возвращается обратно.
+//4. В консоли писать "Dark mode ON" или "Dark mode OFF".
+
+const btn = document.getElementById('btn')
+const body = document.getElementById('body')
+
+
+btn.addEventListener('click', () => {
+    body.classList.toggle('dark-mode')
+
+    if(body.classList.contains('dark-mode')){
+        btn.classList.add('dark-mode')
+        console.log("Dark mode ON")
+
+    } else {
+        console.log("Dark mode OFF")
+        btn.classList.remove('dark-mode')
     }
     
-    if(password.length < 6){
-        console.log("Password too short")
-        passwordElement.style.borderColor = "red"
-        return
-    }
-    
-    console.log(`Logged in: ${login}`)
-    form.reset()
-    form.elements.password.style.borderColor = ""
+})
 
+
+//Задача 2.
+//
+//Автозаполнение подсказок при фокусе (focusin) и выбор варианта (click)
+//
+//ТЗ
+//1. Есть <input> для города.
+//2. Когда поле получает фокус — появляется список подсказок (3 города).
+//3. Когда пользователь уходит из поля (focusout) — подсказки исчезают.
+//4. При клике на подсказку — она подставляется в инпут.
+//5. Всё делается через делегирование на контейнере.
+
+const box = document.getElementById('city-wrapper');
+const cityInput = document.getElementById('city');
+const suggestionsList = document.getElementById('suggestions');
+
+function createCityList() {
+    const cities = ['New York', 'Los Angeles', 'Chicago'];
+    suggestionsList.insertAdjacentHTML('beforeend', cities.map(city => `<li class="city-item">${city}</li>`));
+}
+
+box.addEventListener('focusin', () => {
+    createCityList();
+    console.log('Pole in focus');
+})
+
+box.addEventListener('focusout', () => {
+    setTimeout(() => {
+        suggestionsList.innerHTML = '';
+    }, 100); // Задержка для обработки клика по подсказке
+    console.log('Pole out of focus');
+});
+
+box.addEventListener('click', (e) => {
+    const target = e.target;
+    if (target.classList.contains('city-item')) {
+        cityInput.value = target.textContent;
+        suggestionsList.innerHTML = '';
+        console.log(`Выбран город: ${target.textContent}`);
+    }
 })
