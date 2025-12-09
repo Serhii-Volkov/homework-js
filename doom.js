@@ -97,7 +97,6 @@
 
 
 
-// NEW
 
 
 //ЗАДАЧА 1.1 — Табы (вкладки), как на сайте компании
@@ -278,8 +277,6 @@
 
 
 
-//New
-
 //Задача 1 — Переключатель темы (click)
 //
 //ТЗ
@@ -288,23 +285,23 @@
 //3. При повторном клике возвращается обратно.
 //4. В консоли писать "Dark mode ON" или "Dark mode OFF".
 
-const btn = document.getElementById('btn')
-const body = document.getElementById('body')
-
-
-btn.addEventListener('click', () => {
-    body.classList.toggle('dark-mode')
-
-    if(body.classList.contains('dark-mode')){
-        btn.classList.add('dark-mode')
-        console.log("Dark mode ON")
-
-    } else {
-        console.log("Dark mode OFF")
-        btn.classList.remove('dark-mode')
-    }
-    
-})
+//const btn = document.getElementById('btn')
+//const body = document.getElementById('body')
+//
+//
+//btn.addEventListener('click', () => {
+//    body.classList.toggle('dark-mode')
+//
+//    if(body.classList.contains('dark-mode')){
+//        btn.classList.add('dark-mode')
+//        console.log("Dark mode ON")
+//
+//    } else {
+//        console.log("Dark mode OFF")
+//        btn.classList.remove('dark-mode')
+//    }
+//    
+//})
 
 
 //Задача 2.
@@ -318,32 +315,121 @@ btn.addEventListener('click', () => {
 //4. При клике на подсказку — она подставляется в инпут.
 //5. Всё делается через делегирование на контейнере.
 
-const box = document.getElementById('city-wrapper');
-const cityInput = document.getElementById('city');
-const suggestionsList = document.getElementById('suggestions');
+//const box = document.getElementById('city-wrapper');
+//const cityInput = document.getElementById('city');
+//const suggestionsList = document.getElementById('suggestions');
+//
+//function createCityList() {
+//    const cities = ['New York', 'Los Angeles', 'Chicago'];
+//    suggestionsList.insertAdjacentHTML('beforeend', cities.map(city => `<li class="city-item">${city}</li>`));
+//}
+//
+//box.addEventListener('focusin', () => {
+//    createCityList();
+//    console.log('Pole in focus');
+//})
+//
+//box.addEventListener('focusout', () => {
+//    setTimeout(() => {
+//        suggestionsList.innerHTML = '';
+//    }, 100); // Задержка для обработки клика по подсказке
+//    console.log('Pole out of focus');
+//});
+//
+//box.addEventListener('click', (e) => {
+//    const target = e.target;
+//    if (target.classList.contains('city-item')) {
+//        cityInput.value = target.textContent;
+//        suggestionsList.innerHTML = '';
+//        console.log(`Выбран город: ${target.textContent}`);
+//    }
+//})
 
-function createCityList() {
-    const cities = ['New York', 'Los Angeles', 'Chicago'];
-    suggestionsList.insertAdjacentHTML('beforeend', cities.map(city => `<li class="city-item">${city}</li>`));
-}
 
-box.addEventListener('focusin', () => {
-    createCityList();
-    console.log('Pole in focus');
+
+
+// NEW
+//ЗАДАЧА 1
+
+//✅ ТЗ: Фильтрация карточек по категориям
+//1. Есть кнопки категорий: all, fruit, vegetable.
+//2. По клику показываются только карточки соответствующей категории.
+//3. Активная кнопка подсвечена.
+
+const buttons = document.querySelectorAll('#filters button')
+const products1 = document.querySelectorAll('.item')
+
+buttons.forEach(btn => {
+    btn.addEventListener('click', () => {
+        const buttonValue = btn.dataset.filter
+        
+        buttons.forEach(b => {
+            b.classList.remove('active')
+        })
+
+        products1.forEach(product => {
+            const productValue = product.dataset.type
+
+            if(buttonValue === 'all'){
+                product.style.display = "block"
+            } 
+            else if(buttonValue === productValue) {
+                product.style.display = "block"
+            } else {
+                product.style.display = "none"
+            }
+
+            
+        })
+
+       
+
+    btn.classList.add('active')
+    })
 })
 
-box.addEventListener('focusout', () => {
-    setTimeout(() => {
-        suggestionsList.innerHTML = '';
-    }, 100); // Задержка для обработки клика по подсказке
-    console.log('Pole out of focus');
-});
 
-box.addEventListener('click', (e) => {
-    const target = e.target;
-    if (target.classList.contains('city-item')) {
-        cityInput.value = target.textContent;
-        suggestionsList.innerHTML = '';
-        console.log(`Выбран город: ${target.textContent}`);
+
+
+//✅ ЗАДАЧА 2
+//
+//ТЗ
+//1. Дано: массив товаров.
+//2. Отобрази их в <ul> как карточки.
+//
+//<ul id="products"></ul> const products = ["Milk", "Bread", "Cheese", "Apples"];
+ 
+const productsList = document.getElementById('products')
+const products = ["Milk", "Bread", "Cheese", "Apples"];
+
+productsList.insertAdjacentHTML('beforeend', products.map(p => `<li>${p}</li>`).join(''))
+
+
+//✅ ЗАДАЧА 3 — Добавление комментария
+//
+//ТЗ
+//1. У пользователя есть input и кнопка.
+//2. При клике добавляется комментарий.
+//3. Комментарий добавляется в конец списка
+//4. Пустые строки игнорировать.
+//
+//<input id="comment-input" placeholder="Write comment"> <button id="add-comment">Add</button> <ul id="comments"></ul>
+
+const input = document.getElementById('comment-input')
+const button = document.getElementById('add-comment')
+const coments = document.getElementById('comments')
+
+button.addEventListener('click', (e) => {
+    e.preventDefault() 
+
+    const comment = input.value
+
+    if(comment.trim().length <= 0){
+        console.log('Комментарий не может быть пустым')
+        return
     }
+
+    coments.insertAdjacentHTML('beforeend', `<li>${comment}</li>`)
+    input.value = ''
+
 })
