@@ -24,6 +24,10 @@
 //    }
 //})
 
+
+
+
+
 //Задача 2. Активный элемент в списке
 //
 //<ul id="tabs"> <li class="tab">Home</li> <li class="tab">About</li> <li class="tab">Contacts</li> </ul>
@@ -345,10 +349,6 @@
 //    }
 //})
 
-
-
-
-// NEW
 //ЗАДАЧА 1
 
 //✅ ТЗ: Фильтрация карточек по категориям
@@ -356,39 +356,33 @@
 //2. По клику показываются только карточки соответствующей категории.
 //3. Активная кнопка подсвечена.
 
-const buttons = document.querySelectorAll('#filters button')
-const products1 = document.querySelectorAll('.item')
-
-buttons.forEach(btn => {
-    btn.addEventListener('click', () => {
-        const buttonValue = btn.dataset.filter
-        
-        buttons.forEach(b => {
-            b.classList.remove('active')
-        })
-
-        products1.forEach(product => {
-            const productValue = product.dataset.type
-
-            if(buttonValue === 'all'){
-                product.style.display = "block"
-            } 
-            else if(buttonValue === productValue) {
-                product.style.display = "block"
-            } else {
-                product.style.display = "none"
-            }
-
-            
-        })
-
-       
-
-    btn.classList.add('active')
-    })
-})
-
-
+//const buttons = document.querySelectorAll('#filters button')
+//const products1 = document.querySelectorAll('.item')
+//
+//buttons.forEach(btn => {
+//    btn.addEventListener('click', () => {
+//        const buttonValue = btn.dataset.filter
+//        
+//        buttons.forEach(b => {
+//            b.classList.remove('active')
+//        })
+//
+//        products1.forEach(product => {
+//            const productValue = product.dataset.type
+//
+//            if(buttonValue === 'all'){
+//                product.style.display = "block"
+//            } 
+//            else if(buttonValue === productValue) {
+//                product.style.display = "block"
+//            } else {
+//                product.style.display = "none"
+//            }
+//        })
+//
+//    btn.classList.add('active')
+//    })
+//})
 
 
 //✅ ЗАДАЧА 2
@@ -399,10 +393,10 @@ buttons.forEach(btn => {
 //
 //<ul id="products"></ul> const products = ["Milk", "Bread", "Cheese", "Apples"];
  
-const productsList = document.getElementById('products')
-const products = ["Milk", "Bread", "Cheese", "Apples"];
-
-productsList.insertAdjacentHTML('beforeend', products.map(p => `<li>${p}</li>`).join(''))
+//const productsList = document.getElementById('products')
+//const products = ["Milk", "Bread", "Cheese", "Apples"];
+//
+//productsList.insertAdjacentHTML('beforeend', products.map(p => `<li>${p}</li>`).join(''))
 
 
 //✅ ЗАДАЧА 3 — Добавление комментария
@@ -415,21 +409,176 @@ productsList.insertAdjacentHTML('beforeend', products.map(p => `<li>${p}</li>`).
 //
 //<input id="comment-input" placeholder="Write comment"> <button id="add-comment">Add</button> <ul id="comments"></ul>
 
-const input = document.getElementById('comment-input')
-const button = document.getElementById('add-comment')
-const coments = document.getElementById('comments')
+//const input = document.getElementById('comment-input')
+//const button = document.getElementById('add-comment')
+//const coments = document.getElementById('comments')
+//
+//button.addEventListener('click', (e) => {
+//    e.preventDefault() 
+//
+//    const comment = input.value
+//
+//    if(comment.trim().length <= 0){
+//        console.log('Комментарий не может быть пустым')
+//        return
+//    }
+//
+//    coments.insertAdjacentHTML('beforeend', `<li>${comment}</li>`)
+//    input.value = ''
+//
+//})
 
-button.addEventListener('click', (e) => {
-    e.preventDefault() 
 
-    const comment = input.value
 
-    if(comment.trim().length <= 0){
-        console.log('Комментарий не может быть пустым')
-        return
-    }
+// NEW
+//✅ ТЗ 1
+//1. При загрузке получить всех пользователей и заполнить список <select>.
+//2. При выборе пользователя загрузить его посты:https://jsonplaceholder.typicode.com/posts?userId={id}
+//3. Рендерить посты картами.
+//4. Если выбран пустой option — очищать блок.
 
-    coments.insertAdjacentHTML('beforeend', `<li>${comment}</li>`)
-    input.value = ''
 
-})
+//const API_USERS = 'https://jsonplaceholder.typicode.com/users'
+//const API_POSTS = 'https://jsonplaceholder.typicode.com/posts' 
+//const userSelect = document.getElementById('user-select')
+//const userPosts = document.getElementById('user-posts')
+
+
+//fetch(API_USERS)
+//  .then(res => res.json())
+//  .then(users => {
+//    users.forEach(user => {
+//      const option = document.createElement('option')
+//      option.value = user.id
+//      option.textContent = user.name
+//      userSelect.appendChild(option)
+//    })
+//  })
+//  .catch(err => console.error(err))
+//
+//  userSelect.addEventListener('change', () => {
+//    const userId = userSelect.value
+//
+//    if(!userId) {
+//        userPosts.innerHTML = ''
+//        return
+//    }
+//
+//
+//    fetch(`${API_POSTS}?userId=${userId}`)
+//    .then(res => res.json())
+//    .then(posts => renderPosts(posts))
+//  })
+//
+//  function renderPosts(posts){
+//    userPosts.innerHTML = ''
+//
+//    posts.forEach(post => {
+//        const card = document.createElement('div')
+//        card.style.border = '1px solid #ccc'
+//        card.style.padding = '10px'
+//        card.style.marginBottom = '10px'
+//
+//        card.innerHTML = `
+//        <h3>${post.title}</h3>
+//        <p>${post.body}</p>
+//      `
+//
+//      userPosts.appendChild(card)
+//    })
+//  }
+
+
+
+//✅ ТЗ 2
+//1. При загрузке страницы получить пользователей с
+//https://jsonplaceholder.typicode.com/users
+//2. Создать таблицу: Name | Email | City.
+//3. Добавить input для фильтрации по городу.
+//4. При вводе фильтровать таблицу через filter, затем рендерить.
+
+
+
+//nst cityInput = document.getElementById("city-filter");
+//nst tableBody = document.getElementById("user-table-body");
+//t allUsers = []
+//
+//tch(API_USERS)
+//.then(res => res.json())
+//.then(users => {
+//  allUsers = users
+//  renderTable(users)
+//})
+//
+//
+//function renderTable(users){
+//  tableBody.innerHTML = '';
+//
+//  users.forEach(user => {
+//    const row = document.createElement('tr')
+//    row.innerHTML = `
+//    <td>${user.name} </td>
+//    <td>${user.email} </td>
+//    <td>${user.address.city}</td>`
+//
+//    tableBody.appendChild(row)
+//  })
+//}
+//
+//cityInput.addEventListener('input', (e) => {
+//  cityInputValue = e.target.value.toLowerCase()
+//
+//  const filterdUsersCity = allUsers.filter(user => 
+//    user.address.city.toLowerCase().includes(cityInputValue)
+//  )
+//
+//  renderTable(filterdUsersCity)
+//})
+
+
+
+//✅ ТЗ 3
+//1. Загрузить посты с https://jsonplaceholder.typicode.com/posts?_limit=20.
+//2. Отобразить список заголовков.
+//3. Добавить input для поиска по title.
+//4. При вводе фильтровать посты и перерисовывать список.
+
+
+
+//const searchInput = document.getElementById("post-search");
+//const postList = document.getElementById("post-list");
+//let allPosts = [];
+//
+//
+//fetch(`${API_POSTS}?_limit=20`)
+//  .then(res => res.json())
+//  .then(posts => {
+//    allPosts = posts; 
+//    renderPosts(allPosts); 
+//  });
+//
+//
+//function renderPosts(posts) {
+//  postList.innerHTML = '';
+//
+//  posts.forEach(post => {
+//    const div = document.createElement('div');
+//    div.style.border = '1px solid #ccc';
+//    div.style.padding = '10px';
+//    div.style.marginBottom = '10px';
+//
+//    div.textContent = post.title;
+//    postList.appendChild(div);
+//  });
+//}
+//
+//
+//searchInput.addEventListener('input', (e) => {
+//  const inputValue = e.target.value.toLowerCase();
+//
+//  const filteredPosts = allPosts.filter(post =>
+//    post.title.toLowerCase().includes(inputValue)
+//  );
+//
+//  renderPosts(filteredPosts);
+//});
