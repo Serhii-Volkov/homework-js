@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    
+
     <title>Document</title>
     <link rel="stylesheet" href="global.css" />
   </head>
@@ -97,7 +97,7 @@
 
     <input id="comment-input" placeholder="Write comment" />
     <button id="add-comment">Add</button>
-    <ul id="comments"></ul> -->
+    <ul id="comments"></ul> 
 
 
 
@@ -123,8 +123,64 @@
 
 
     <input id="post-search" placeholder="Search post..."> 
-    <ul id="post-list"></ul>
+    <ul id="post-list"></ul> -->
+
+    <section>
+      <div class="tabs" id="tabs">
+        <button class="tab active" data-tab="home" type="button">Home</button>
+        <button class="tab" data-tab="about" type="button">About</button>
+        <button class="tab" data-tab="contact" type="button">Contact</button>
+      </div>
+      <div class="panels">
+        <div class="panel" data-panel="home">🏠 Home content</div>
+        <div class="panel hidden" data-panel="about">ℹ️ About content</div>
+        <div class="panel hidden" data-panel="contact">📩 Contact content</div>
+      </div>
+    </section>
+
+    <style>
+      .tabs {
+        display: flex;
+        gap: 8px;
+        padding: 8px;
+        border: 1px solid #999;
+        border-radius: 10px;
+      }
+      .tab.active {
+        font-weight: 700;
+        border-bottom: 3px solid #222;
+      }
+      .hidden {
+        display: none;
+      }
+      .panel {
+        margin-top: 10px;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 10px;
+      }
+    </style>
+
+    <section>
+      <input id="todoInput" placeholder="New task..." />
+      <button id="addTodo" type="button">Add</button>
+      <ul id="todoList"></ul>
+    </section>
+    <style>
+      #todoList {
+        margin-top: 10px;
+        padding-left: 16px;
+      }
+      .done {
+        text-decoration: line-through;
+        opacity: 0.6;
+      }
+      .actions {
+        margin-left: 10px;
+      }
+    </style>
 
     <script src="doom.js"></script>
+    <script src="date.js"></script>
   </body>
 </html>

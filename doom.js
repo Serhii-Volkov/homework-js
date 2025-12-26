@@ -582,3 +582,116 @@
 //
 //  renderPosts(filteredPosts);
 //});
+
+//✅ Task 1
+//
+//ТЗ
+//Есть вкладки.
+//Нужно:
+//1. Повесить один обработчик на .tabs.
+//2. При клике на .tab:
+//• активной становится кликнутая вкладка (.active)
+//• показывается соответствующий контент по data-tab (остальные скрыть)
+//3. Клик по пустому месту внутри .tabs — ничего не делает (проверка target).
+//
+//<section> <div class="tabs" id="tabs"> <button class="tab active" data-tab="home" type="button">Home</button> <button class="tab" data-tab="about" type="button">About</button> <button class="tab" data-tab="contact" type="button">Contact</button> </div> <div class="panels"> <div class="panel" data-panel="home">🏠 Home content</div> <div class="panel hidden" data-panel="about">ℹ️ About content</div> <div class="panel hidden" data-panel="contact">📩 Contact content</div> </div> </section><style> .tabs { display: flex; gap: 8px; padding: 8px; border: 1px solid #999; border-radius: 10px; } .tab.active { font-weight: 700; border-bottom: 3px solid #222; } .hidden { display: none; } .panel { margin-top: 10px; padding: 10px; border: 1px solid #ddd; border-radius: 10px; } </style>
+
+
+//✅ Task 2
+//Нужно сделать мини todo:
+//1. Кнопка Add добавляет задачу в список (li с текстом + кнопки Done и Delete).
+//2. На список повесить один обработчик кликов.
+//3. Done переключает класс done у li.
+//4. Delete удаляет li.
+//5. Клик по самому li выводит в консоль Open task: ... (но клики по Done/Delete не должны открывать).
+//
+//<section> <input id="todoInput" placeholder="New task..." /> <button id="addTodo" type="button">Add</button> <ul id="todoList"></ul> </section><style> #todoList { margin-top: 10px; padding-left: 16px; } .done { text-decoration: line-through; opacity: 0.6; } .actions { margin-left: 10px; } </style>
+
+
+
+//NEW
+//✅ Task 1 ТЗ 
+//Есть вкладки. Нужно: 1. Повесить один обработчик на .tabs. 
+//2. При клике на .tab: • активной становится кликнутая вкладка (.active) • показывается соответствующий контент по data-tab (остальные скрыть) 
+//3. Клик по пустому месту внутри .tabs — ничего не делает (проверка target). <section> <div class="tabs" id="tabs"> <button class="tab active" data-tab="home" type="button">Home</button> <button class="tab" data-tab="about" type="button">About</button>
+//  <button class="tab" data-tab="contact" type="button">Contact</button> </div> <div class="panels"> <div class="panel" data-panel="home">
+// 🏠 Home content</div> <div class="panel hidden" data-panel="about">ℹ️ About content</div> <div class="panel hidden" data-panel="contact">📩 Contact content</div> </div> </section>
+// <style> .tabs { display: flex; gap: 8px; padding: 8px; border: 1px solid #999; border-radius: 10px; } 
+// .tab.active { font-weight: 700; border-bottom: 3px solid #222; } .hidden { display: none; } 
+// .panel { margin-top: 10px; padding: 10px; border: 1px solid #ddd; border-radius: 10px; } </style>
+
+
+  const tabs = document.getElementById('tabs')
+  const panels = document.querySelectorAll('.panel')
+
+  tabs.addEventListener('click', (e) => {
+    if (!e.target.classList.contains('tab')) return
+
+    const tab = e.target
+    const tabName = tab.dataset.tab
+
+    document.querySelectorAll('.tab').forEach(t =>
+      t.classList.remove('active')
+    )
+    tab.classList.add('active')
+
+    panels.forEach(panel => {
+      panel.classList.toggle(
+        'hidden',
+        panel.dataset.panel !== tabName
+      )
+    })
+  })
+
+
+  
+  //✅ Task 2 Нужно сделать мини todo: 
+  //1. Кнопка Add добавляет задачу в список (li с текстом + кнопки Done и Delete). 
+  //2. На список повесить один обработчик кликов. 
+  //3. Done переключает класс done у li. 
+  //4. Delete удаляет li. 
+  //5. Клик по самому li выводит в консоль Open task: ... (но клики по Done/Delete не должны открывать). <section> <input id="todoInput" placeholder="New task..." /> <button id="addTodo" type="button">Add</button> <ul id="todoList"></ul> </section><style> #todoList { margin-top: 10px; padding-left: 16px; } .done { text-decoration: line-through; opacity: 0.6; } .actions { margin-left: 10px; } </style>
+  
+
+  const input = document.getElementById('todoInput')
+  const addBtn = document.getElementById('addTodo')
+  const list = document.getElementById('todoList')
+
+  addBtn.addEventListener('click', () => {
+    const text = input.value.trim()
+    if (!text) return
+
+    const li = document.createElement('li')
+    li.innerHTML = `
+      <span class="text">${text}</span>
+      <span class="actions">
+        <button data-action="done">Done</button>
+        <button data-action="delete">Delete</button>
+      </span>
+    `
+    list.appendChild(li)
+    input.value = ''
+  })
+
+  list.addEventListener('click', (e) => {
+    const li = e.target.closest('li')
+    if (!li) return
+
+    const action = e.target.dataset.action
+
+    if (action === 'done') {
+      li.classList.toggle('done')
+      return
+    }
+
+    if (action === 'delete') {
+      li.remove()
+      return
+    }
+
+    if (!action) {
+      const text = li.querySelector('.text').textContent
+      console.log('Open task:', text)
+    }
+  })
+
