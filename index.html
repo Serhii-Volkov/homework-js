@@ -180,27 +180,24 @@
       }
     </style>-->
 
-    <h2>Список постов</h2>
-    <input type="number" id="postIdInput" placeholder="ID (1-100)">
-    <button id="loadButton">Load</button>
-    
-    <div id="statusBlock"></div>
-    <div id="postContainer"></div>
-    <div id="commentsContainer"></div>
+    <div class="wrap">
+      <h2>Posts</h2>
+      <div class="controls">
+        <input
+          id="searchInput"
+          class="input"
+          placeholder="Search by title..."
+        />
+        <button id="searchBtn" class="btn">Search</button>
+      </div>
+      <div class="info">
+        <span id="pageInfo">Page: 0</span>
+        <span id="countInfo">Loaded: 0 posts</span>
+      </div>
+      <ul id="postsList" class="list"></ul>
+      <button id="loadMoreBtn" class="btn">Load more</button>
+    </div>
 
-
-  <div class="wrap"> 
-    <h2>Posts</h2> <div class="info"> 
-      <span id="pageInfo">Page: 0</span> 
-      <span id="countInfo">Loaded: 0 posts</span>
-  </div> 
-
-  <ul id="postsList" class="list"></ul>
-  <button id="loadMoreBtn" class="btn">Load more</button>
-
-
-  <
-    
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="promise.js"></script>
   </body>

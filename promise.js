@@ -174,53 +174,53 @@ const ids = [1, 2, 3, 4, 5];
 //• карточка поста: title, body
 //• список комментариев: name, email, body
 
-const postIdInput = document.getElementById("postIdInput");
-const loadButton = document.getElementById("loadButton");
-const statusBlock = document.getElementById("statusBlock");
-const postContainer = document.getElementById("postContainer");
-const commentsContainer = document.getElementById("commentsContainer");
-
-loadButton.addEventListener("click", async () => {
-    const postId = postIdInput.value;
-
-    if (!postId || postId < 1 || postId > 100) {
-        statusBlock.textContent = "Error: Enter ID 1-100";
-        return;
-    }
-
-    statusBlock.textContent = "Loading...";
-    postContainer.innerHTML = "";
-    commentsContainer.innerHTML = "";
-
-    try {
-        const postRes = await axios.get(`https://jsonplaceholder.typicode.com/posts/${postId}`);
-        const post = postRes.data;
-
-        postContainer.innerHTML = `
-            <h2>${post.title}</h2>
-            <p>${post.body}</p>
-        `;
-
-        try {
-            const commRes = await axios.get(`https://jsonplaceholder.typicode.com/posts/${postId}/comments`);
-            const comments = commRes.data;
-
-            commentsContainer.innerHTML = comments.map(c => `
-                <div>
-                    <h4>${c.name} (${c.email})</h4>
-                    <p>${c.body}</p>
-                </div>
-            `).join("");
-
-            statusBlock.textContent = "Success";
-        } catch (e) {
-            commentsContainer.innerHTML = "Failed to load comments";
-        }
-
-    } catch (e) {
-        statusBlock.textContent = "Post not found";
-    }
-});
+//const postIdInput = document.getElementById("postIdInput");
+//const loadButton = document.getElementById("loadButton");
+//const statusBlock = document.getElementById("statusBlock");
+//const postContainer = document.getElementById("postContainer");
+//const commentsContainer = document.getElementById("commentsContainer");
+//
+//loadButton.addEventListener("click", async () => {
+//    const postId = postIdInput.value;
+//
+//    if (!postId || postId < 1 || postId > 100) {
+//        statusBlock.textContent = "Error: Enter ID 1-100";
+//        return;
+//    }
+//
+//    statusBlock.textContent = "Loading...";
+//    postContainer.innerHTML = "";
+//    commentsContainer.innerHTML = "";
+//
+//    try {
+//        const postRes = await axios.get(`https://jsonplaceholder.typicode.com/posts/${postId}`);
+//        const post = postRes.data;
+//
+//        postContainer.innerHTML = `
+//            <h2>${post.title}</h2>
+//            <p>${post.body}</p>
+//        `;
+//
+//        try {
+//            const commRes = await axios.get(`https://jsonplaceholder.typicode.com/posts/${postId}/comments`);
+//            const comments = commRes.data;
+//
+//            commentsContainer.innerHTML = comments.map(c => `
+//                <div>
+//                    <h4>${c.name} (${c.email})</h4>
+//                    <p>${c.body}</p>
+//                </div>
+//            `).join("");
+//
+//            statusBlock.textContent = "Success";
+//        } catch (e) {
+//            commentsContainer.innerHTML = "Failed to load comments";
+//        }
+//
+//    } catch (e) {
+//        statusBlock.textContent = "Post not found";
+//    }
+//});
 
 
 
@@ -290,3 +290,88 @@ loadButton.addEventListener("click", async () => {
 
 
 
+//1. Есть input для поиска по title.
+//2. Когда пользователь вводит текст и нажимает Search:
+//• очищаем список
+//• сбрасываем page=1
+//• загружаем первую страницу
+//• отображаем только те посты, где title содержит строку поиска
+//3. Кнопка Load more догружает следующую страницу, продолжая текущий поиск (фильтруем каждую порцию).
+//4. Если строка поиска пустая — показываем все посты (без фильтра).
+
+//
+// <div class="wrap">
+//     <h2>Posts</h2>
+//     <div class="controls">
+//       <input
+//         id="searchInput"
+//         class="input"
+//         placeholder="Search by title..."
+//       />
+//       <button id="searchBtn" class="btn">Search</button>
+//     </div>
+//     <div class="info">
+//       <span id="pageInfo">Page: 0</span>
+//       <span id="countInfo">Loaded: 0 posts</span>
+//     </div>
+//     <ul id="postsList" class="list"></ul>
+//     <button id="loadMoreBtn" class="btn">Load more</button>
+//   </div>
+
+const searchInput = document.getElementById("searchInput");
+const searchBtn = document.getElementById("searchBtn");
+const pageInfo = document.getElementById("pageInfo");
+const countInfo = document.getElementById("countInfo");
+const postsList = document.getElementById("postsList");
+const loadMoreBtn = document.getElementById("loadMoreBtn");
+let page = 0;
+const limit = 6;
+
+async function fetchPosts(page) {
+    const res = await axios.get("https://jsonplaceholder.typicode.com/posts", {
+        params: {
+            _page: page,
+            _limit: limit
+        }
+    });
+    return res.data;
+}
+
+function renderPosts(posts){
+    posts.map(post => {
+        
+        const li = document.createElement("li");
+        li.classList.add("list-item");
+        li.innerHTML = `
+      <h3>${post.title}</h3>
+      <p>${post.body}</p>
+        `;
+        postsList.appendChild(li);
+        const totalLoaded = postsList.children.length;
+        pageInfo.textContent = `Page: ${page}`;
+        countInfo.textContent = `Loaded: ${totalLoaded} posts`;
+    })
+}
+
+function searchPosts(posts, query) {
+    if (!query) {
+        return posts;
+    }
+    return posts.filter(post => post.title.toLowerCase().includes(query.toLowerCase()));
+}
+
+loadMoreBtn.addEventListener("click", async () => {
+    page += 1;
+    const posts = await fetchPosts(page);
+    renderPosts(posts);
+    return posts;
+});
+
+searchBtn.addEventListener("click", async () => {
+    const posts = await fetchPosts(1);
+    const query = searchInput.value.toLowerCase();
+    const filterPosts = posts.filter(post => post.title.toLowerCase().includes(query));
+    postsList.innerHTML = "";
+    page = 1;
+    renderPosts(filterPosts);
+})
